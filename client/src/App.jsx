@@ -26,6 +26,8 @@ const App = () => {
     const unsubscribe = useSocketStore().subscribe((event) => {
       console.log('Socket event:', event);
       
+      console.log("")
+
       switch (event.type) {
         case 'room_created':
           setGameState(prev => ({
@@ -34,6 +36,22 @@ const App = () => {
             mySymbol: 'X',
             isHost: true,
             status: event.data.status || 'waiting',
+            board: event.data.board || Array(9).fill(null),
+            currentPlayer: event.data.currentPlayer || 'X',
+            gameCount: event.data.gameCount || 1
+          }));
+          setShowRoomForm(false);
+          break;
+
+        case 'room_joined':
+          setGameState(prev => ({
+            ...prev,
+            roomId: event.data.roomId,
+            mySymbol: event.data.symbol,
+            isHost: false,
+            status: event.data.status || 'waiting',
+            board: event.data.board || Array(9).fill(null),
+            currentPlayer: event.data.currentPlayer || 'X',
             gameCount: event.data.gameCount || 1
           }));
           setShowRoomForm(false);
@@ -82,14 +100,13 @@ const App = () => {
           break;
 
         case 'player_joined':
-          // Host receives this when second player joins - game is now ready to start
-          setShowRoomForm(false);
+          // Another player joined - update status to playing
           setGameState(prev => ({
             ...prev,
-            status: 'playing',
-            board: Array(9).fill(null),
+            status: event.data.status || 'playing',
+            board: event.data.board || prev.board,
             currentPlayer: event.data.currentPlayer || 'X',
-            gameCount: event.data.gameCount || prev.gameCount
+            gameCount: event.data.gameCount || prev.gameCount + 1
           }));
           break;
 
@@ -200,7 +217,7 @@ const App = () => {
     );
   }
 
-  // Render waiting screen (game not started yet)
+  // Render waiting screen (game not started yet) - show board but disabled
   if (gameState.status === 'waiting') {
     return (
       <div className="app">
@@ -219,6 +236,16 @@ const App = () => {
               <p className="host-message">You are the host (X)</p>
             )}
           </div>
+          
+          {/* Show disabled board preview */}
+          <Board
+            board={gameState.board}
+            onMove={() => {}}
+            currentPlayer={'X'}
+            mySymbol={gameState.mySymbol}
+            status={'waiting'}
+            winner={null}
+          />
         </main>
 
         <footer className="game-footer">

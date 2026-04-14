@@ -1,33 +1,178 @@
-.app {
-  width: 100%;
-  max-width: 500px;
-  padding: 20px;
+/* ============================================
+   NEON NEXUS DESIGN SYSTEM
+   "The Electric Kineticist"
+   ============================================ */
+
+:root {
+  /* Color Palette - Foundation */
+  --background: #10131a;
+  --surface: #141821;
+  
+  /* Player X (The Pulse) - Neon Blue */
+  --primary: #c3f5ff;
+  --primary-container: #00e5ff;
+  --primary-fixed-dim: rgba(0, 229, 255, 0.16);
+  
+  /* Player O (The Flare) - Neon Pink */
+  --secondary: #fface8;
+  --secondary-container: #ff24e4;
+  --secondary-fixed-dim: rgba(255, 36, 228, 0.16);
+  
+  /* Neutral Accents */
+  --tertiary: #f2e9ff;
+  --surface-variant: rgba(242, 233, 255, 0.12);
+  --outline-variant: rgba(242, 233, 255, 0.15);
+  
+  /* Surface Containers - Layering */
+  --surface-container-lowest: #0d1016;
+  --surface-container-low: #1a1f2b;
+  --surface-container: #242938;
+  --surface-container-high: #2e3445;
+  --surface-container-highest: #383e50;
+  
+  /* Text Colors */
+  --on-surface: rgba(255, 255, 255, 0.87);
+  --on-surface-variant: rgba(255, 255, 255, 0.60);
+  --on-primary: #003941;
+  --on-secondary: #4a0e3d;
+  
+  /* Typography Scale */
+  --display-lg: 3rem;
+  --display-md: 2.5rem;
+  --display-sm: 2rem;
+  --headline-lg: 1.75rem;
+  --headline-md: 1.5rem;
+  --title-lg: 1.25rem;
+  --title-md: 1.125rem;
+  --label-lg: 1rem;
+  --label-md: 0.875rem;
+  
+  /* Corner Radius */
+  --full: 9999px;
+  --xl: 3rem;
+  --lg: 2rem;
+  --md: 1.5rem;
+  --sm: 1rem;
+  --xs: 0.5rem;
+  
+  /* Spacing Scale */
+  --xxl: 4rem;
+  --xl: 3rem;
+  --lg: 2rem;
+  --md: 1.5rem;
+  --sm: 1rem;
+  --xs: 0.5rem;
 }
 
-/* Lobby Styles */
+/* ============================================
+   BASE STYLES & TYPOGRAPHY
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--background);
+  color: var(--on-surface);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ambient Background Effects */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(0, 229, 255, 0.15), transparent 40%),
+    radial-gradient(ellipse at 80% 80%, rgba(255, 36, 228, 0.15), transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(242, 233, 255, 0.05), transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ============================================
+   APP CONTAINER
+   ============================================ */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--lg);
+  width: 100%;
+}
+
+/* ============================================
+   LOBBY / ROOM FORM
+   ============================================ */
+
 .room-form {
-  background: white;
-  border-radius: 16px;
-  padding: 40px 30px;
+  background: var(--surface-variant);
+  backdrop-filter: blur(24px);
+  border-radius: var(--lg);
+  padding: var(--xl) var(--lg);
   text-align: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px var(--outline-variant);
 }
 
 .room-form h1 {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  color: #333;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: var(--display-md);
+  margin-bottom: var(--lg);
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 
+    0 0 20px rgba(0, 229, 255, 0.6),
+    0 0 40px rgba(0, 229, 255, 0.3);
+}
+
+.room-form h1::before,
+.room-form h1::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  top: 50%;
+}
+
+.room-form h1::before {
+  left: -100%;
+}
+
+.room-form h1::after {
+  right: -100%;
 }
 
 .form-section {
-  margin: 20px 0;
+  margin: var(--md) 0;
 }
 
+/* Divider */
 .divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px 0;
+  margin: var(--sm) 0;
+  color: var(--on-surface-variant);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--label-md);
 }
 
 .divider::before,
@@ -35,155 +180,337 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: #ddd;
+  background: linear-gradient(90deg, transparent, var(--outline-variant), transparent);
 }
 
 .divider span {
-  padding: 0 15px;
-  color: #888;
-  font-size: 0.9rem;
+  padding: 0 var(--sm);
 }
 
+/* Input Field */
 .room-input {
   width: 100%;
-  padding: 12px 16px;
-  font-size: 1.1rem;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  padding: var(--md) var(--lg);
+  font-size: var(--title-lg);
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--surface-container-low);
+  border: none;
+  border-radius: var(--md);
+  margin-bottom: var(--sm);
   text-align: center;
-  letter-spacing: 2px;
+  letter-spacing: 4px;
+  color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.room-input::placeholder {
+  color: var(--on-surface-variant);
+  opacity: 0.5;
 }
 
 .room-input:focus {
   outline: none;
-  border-color: #667eea;
+  background: var(--surface-container);
+  box-shadow: 
+    0 0 0 2px var(--primary-container),
+    0 0 20px rgba(0, 229, 255, 0.3);
 }
 
-/* Button Styles */
+/* ============================================
+   BUTTONS
+   ============================================ */
+
 .btn {
-  padding: 14px 28px;
-  font-size: 1rem;
+  padding: var(--md) var(--lg);
+  font-size: var(--label-lg);
+  font-family: 'Space Grotesk', sans-serif;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--xl);
   cursor: pointer;
   transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .btn-large {
   width: 100%;
+  padding: var(--lg) var(--xl);
 }
 
+/* Primary Button - Gradient with Glow */
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--primary-container), var(--primary));
+  color: var(--on-primary);
+  box-shadow: 
+    0 4px 20px rgba(0, 229, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 
+    0 6px 30px rgba(0, 229, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
+/* Secondary Button - Glass Style */
 .btn-secondary {
-  background: #f0f0f0;
-  color: #333;
+  background: var(--surface-variant);
+  color: var(--on-surface);
+  border-radius: var(--md);
+  backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-  background: #e0e0e0;
+  background: var(--surface-container);
+  box-shadow: 
+    0 0 0 1px var(--outline-variant),
+    0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Game Header */
+/* ============================================
+   GAME HEADER
+   ============================================ */
+
 .game-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: var(--lg);
+  position: relative;
 }
 
 .game-header h1 {
-  color: white;
-  font-size: 1.8rem;
-  margin-bottom: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--primary);
+  font-size: var(--headline-lg);
+  margin-bottom: var(--sm);
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
 .room-id {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 4px 12px;
-  border-radius: 4px;
-  letter-spacing: 2px;
+  display: inline-block;
+  background: var(--surface-container-low);
+  padding: var(--xs) var(--md);
+  border-radius: var(--sm);
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 4px;
+  color: var(--secondary);
+  font-size: var(--title-md);
 }
 
-/* Game Content */
+/* ============================================
+   GAME CONTENT AREA
+   ============================================ */
+
 .game-content {
-  background: white;
-  border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  background: var(--surface-variant);
+  backdrop-filter: blur(24px);
+  border-radius: var(--lg);
+  padding: var(--xl) var(--lg);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  width: fit-content;
+  max-width: 90vw;
 }
 
-/* Board Styles */
+/* ============================================
+   GAME BOARD - NEON GRID
+   ============================================ */
+
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: var(--sm);
+  margin-bottom: var(--lg);
+  padding: var(--md);
+  background: var(--surface-container-low);
+  border-radius: var(--md);
+  width: min(90vw, 450px);
+  max-width: 100%;
 }
+
+/* Cell Styles */
+.cell {
+  aspect-ratio: 1;
+  width: 100%;
+  background: var(--surface-container);
+  border-radius: var(--sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: var(--display-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.cell:hover:not(.taken) {
+  background: var(--surface-container-high);
+  box-shadow: 
+    inset 0 0 20px rgba(255, 255, 255, 0.1),
+    0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+/* Player X Styling */
+.cell.x {
+  color: var(--primary);
+  text-shadow: 
+    0 0 10px var(--primary-container),
+    0 0 20px var(--primary-container),
+    0 0 40px var(--primary-container);
+}
+
+/* Player O Styling */
+.cell.o {
+  color: var(--secondary);
+  text-shadow: 
+    0 0 10px var(--secondary-container),
+    0 0 20px var(--secondary-container),
+    0 0 40px var(--secondary-container);
+}
+
+/* ============================================
+   TURN INDICATOR
+   ============================================ */
 
 .turn-indicator {
   text-align: center;
-  font-size: 1.2rem;
-  color: #333;
-  margin-top: 15px;
+  font-size: var(--title-lg);
+  color: var(--on-surface-variant);
+  margin-top: var(--md);
 }
 
-/* Game Result */
+.turn-indicator .symbol {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: var(--headline-md);
+  margin-left: var(--xs);
+}
+
+.turn-indicator .symbol.x {
+  color: var(--primary);
+  text-shadow: 0 0 20px var(--primary-container);
+}
+
+.turn-indicator .symbol.o {
+  color: var(--secondary);
+  text-shadow: 0 0 20px var(--secondary-container);
+}
+
+/* ============================================
+   GAME RESULT SCREEN
+   ============================================ */
+
 .game-result {
   text-align: center;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 8px;
-  color: white;
-  margin-top: 20px;
+  padding: var(--xl) var(--lg);
+  background: var(--surface-variant);
+  backdrop-filter: blur(24px);
+  border-radius: var(--md);
+  margin-top: var(--lg);
+  animation: slideUp 0.5s ease;
 }
 
 .game-result h2 {
-  font-size: 1.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: var(--display-sm);
+  margin-bottom: var(--sm);
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-/* Footer */
+.game-result.won-x h2 {
+  color: var(--primary);
+  text-shadow: 
+    0 0 20px var(--primary-container),
+    0 0 40px var(--primary-container);
+}
+
+.game-result.won-o h2 {
+  color: var(--secondary);
+  text-shadow: 
+    0 0 20px var(--secondary-container),
+    0 0 40px var(--secondary-container);
+}
+
+.game-result.draw h2 {
+  color: var(--tertiary);
+  text-shadow: 0 0 20px rgba(242, 233, 255, 0.6);
+}
+
+/* ============================================
+   WAITING SCREEN
+   ============================================ */
+
+.waiting-screen {
+  text-align: center;
+  padding: var(--xl) var(--lg);
+  margin-bottom: var(--lg);
+}
+
+.waiting-screen h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: var(--headline-lg);
+  color: var(--on-surface);
+  margin-bottom: var(--md);
+}
+
+.waiting-screen p {
+  color: var(--on-surface-variant);
+  font-size: var(--title-md);
+  line-height: 1.8;
+}
+
+.host-message {
+  margin-top: var(--lg);
+  padding: var(--md) var(--lg);
+  background: var(--primary-fixed-dim);
+  border-radius: var(--sm);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ============================================
+   FOOTER BUTTONS
+   ============================================ */
+
 .game-footer {
   display: flex;
-  gap: 10px;
+  gap: var(--sm);
   justify-content: center;
-  margin-top: 20px;
+  margin-top: var(--lg);
 }
 
 .game-footer .btn {
   flex: 1;
 }
 
-/* Waiting Screen */
-.waiting-screen {
-  text-align: center;
-  padding: 40px 20px;
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.waiting-screen h2 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 15px;
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
-.waiting-screen p {
-  color: #666;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.host-message {
-  margin-top: 20px;
-  padding: 10px;
-  background: rgba(102, 126, 234, 0.1);
-  border-radius: 6px;
-  color: #667eea;
-  font-weight: 500;
+/* Pulse animation for current turn indicator */
+.turn-indicator .symbol.current {
+  animation: pulse 2s ease-in-out infinite;
 }

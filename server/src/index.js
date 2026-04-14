@@ -28,7 +28,13 @@ io.on('connection', (socket) => {
     console.log(`Room created: ${roomId}, Player ${socket.id} is X`);
     
     const room = roomManager.getRoom(roomId);
-    socket.emit('room_created', { roomId, status: room.status, gameCount: room.gameCount });
+    socket.emit('room_created', { 
+      roomId, 
+      status: room.status, 
+      gameCount: room.gameCount,
+      board: [...room.board],
+      currentPlayer: room.currentPlayer
+    });
   });
 
   // Join an existing room
@@ -42,10 +48,23 @@ io.on('connection', (socket) => {
       // Get the symbol assigned to this player
       const symbol = roomManager.getPlayerSymbol(roomId, socket.id);
       
-      socket.emit('room_joined', { roomId, symbol, status: room.status });
+      socket.emit('room_joined', { 
+        roomId, 
+        symbol, 
+        status: room.status,
+        board: [...room.board],
+        currentPlayer: room.currentPlayer,
+        gameCount: room.gameCount
+      });
       
       // Notify other players in the room
-      socket.to(roomId).emit('player_joined', { roomId });
+      socket.to(roomId).emit('player_joined', { 
+        roomId, 
+        board: [...room.board],
+        currentPlayer: room.currentPlayer,
+        status: room.status,
+        gameCount: room.gameCount
+      });
       
       // If game is now ready to start (2 players), notify everyone
       if (room.status === 'playing') {
